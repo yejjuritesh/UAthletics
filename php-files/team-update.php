@@ -47,7 +47,7 @@ $numberOfPlayers=$row["number_of_players"];
       </ul>
     </div>
   </nav>
-<div class="update-form">
+<div class="update-form" method = "post">
 	<form>
 		<h1 style="text-align:center">Update Team</h1>
 		<div class="content">
