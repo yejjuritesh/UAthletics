@@ -20,32 +20,32 @@
     </div>
   </nav>
 <div class="update-form">
-	<form>
+	<form method='POST' action='add-team.php'>
 		<h1 style="text-align:center">Add Team</h1>
 		<div class="content">
 		  <div class="input-field">
-			<input type="name" placeholder="Team Name" id="team-name" value="Team Name" autocomplete="nope">
+			<input type="name" placeholder="Team Name" name="team_name" autocomplete="nope">
 		  </div>
 		  <div class="input-field">
-			<input type="name" placeholder="Sport Type" id="sport-type" value="Sport Type" autocomplete="nope">
+			<input type="name" placeholder="Sport Type" name="sport_type" autocomplete="nope">
 		  </div>
 		  <div class="input-field">
-			<input type="name" placeholder="Number of players" id="no-players" value="Number of players" autocomplete="nope">
+			<input type="name" placeholder="Number of players" name="no_players" autocomplete="nope">
 		  </div>
 		  <div class="input-field">
-			<input type="name" placeholder="Email" id="email" value="Team Email id" autocomplete="nope">
+			<input type="name" placeholder="Email" name="email" autocomplete="nope">
 		  </div>
 		  <div class="input-field">
-			<input type="name" placeholder="Est. date" id="est-date" value="Est. date" autocomplete="nope">
+			<input type="name" placeholder="Est. date" name="est_date" autocomplete="nope">
+		  </div>
+		  <!--<div class="input-field">
+			<input type="name" placeholder="Team Rank" name="rank" value="Team Rank" autocomplete="nope">
+		  </div>-->
+		  <div class="input-field">
+			<input type="name" placeholder="Income" name="income" autocomplete="nope">
 		  </div>
 		  <div class="input-field">
-			<input type="name" placeholder="Team Rank" id="rank" value="Team Rank" autocomplete="nope">
-		  </div>
-		  <div class="input-field">
-			<input type="name" placeholder="Income" id="income" value="Income" autocomplete="nope">
-		  </div>
-		  <div class="input-field">
-			<input type="name" placeholder="Image" id="team-icon" value="Team Display Image" autocomplete="nope">
+			<input type="name" placeholder="Image" name="team_icon" autocomplete="nope">
 		  </div>		  
 		</div>
 		<div class="action">
@@ -53,46 +53,44 @@
 		  
 		</div>
 	</form>
-	<!-- <div class="container">
-	  <p class="title">Team 1</p>
-	  <div class="overlay"></div>
-	  <div class="button"><a href="#"> Click Here </a></div>
-	</div>
-	<div class="container">
-	   <p class="title">Team 2</p>
-	  <div class="overlay"></div>
-	  <div class="button"><a href="#"> Click Here </a></div>
-	</div>
-	<div class="container">
-	  <p class="title">Team 3</p>
-	  <div class="overlay"></div>
-	  <div class="button"><a href="#"> Click Here </a></div>
-	</div>
-	<div class="container">
-	  <p class="title">Team 4</p>
-	  <div class="overlay"></div>
-	  <div class="button"><a href="#"> Click Here </a></div>
-	</div>
-	<div class="container">
-	  <p class="title">Team 5</p>
-	  <div class="overlay"></div>
-	  <div class="button"><a href="#"> Click Here </a></div>
-	</div>
-	<div class="container">
-	   <p class="title">Team 6</p>
-	  <div class="overlay"></div>
-	  <div class="button"><a href="#"> Click Here </a></div>
-	</div>
-	<div class="container">
-	  <p class="title">Team 7</p>
-	  <div class="overlay"></div>
-	  <div class="button"><a href="#"> Click Here </a></div>
-	</div>
-	<div class="container">
-	  <p class="title">Team 8</p>
-	  <div class="overlay"></div>
-	  <div class="button"><a href="#"> Click Here </a></div>
-	</div> -->
 </div>
 </body>
 </html>
+
+<?php
+//import credentials for db
+require_once  'loggedin.php';
+
+//connect to db
+$conn = new mysqli($hn, $un, $pw, $db);
+if($conn->connect_error) die($conn->connect_error);
+
+//check if ISBN exists
+if(isset($_POST['team_name']) && isset($_POST['sport_type']) && isset($_POST['no_players']))
+{
+	
+	//Get data from POST object
+	$team_name = $_POST['team_name'];
+	$sport_type = $_POST['sport_type'];
+	$no_players = $_POST['no_players'];
+	$email = $_POST['email'];
+	$est_date = $_POST['est_date'];
+	$income = $_POST['income'];
+	$team_icon = $_POST['team_icon'];
+	
+	$query_temp = "SELECT sport_id from sport where sport_name = ".$sport_type;
+		
+	
+	$query = "INSERT INTO team (team_name, sport_id, email, est_date, no_players, income, team_icon) VALUES ('$team_name', 1, '$email', '$est_date', '$no_players', '$income', '$team_icon')";
+	
+	//echo $query.'<br>';
+	$result = $conn->query($query);
+	if(!$result) die($conn->error);
+	
+	header("Location: teams.php");//this will return you to the view all page	
+	
+}
+
+
+
+?>

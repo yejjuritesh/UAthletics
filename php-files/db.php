@@ -1,9 +1,7 @@
 <?php
 
-$hn = 'localhost:8889';
+$hn = 'localhost:3306';
 $db = 'rewards';
 $un = 'root';
-$pw = 'root'; //for MAC 'root'
-
-
+$pw = ''; 
 ?>
