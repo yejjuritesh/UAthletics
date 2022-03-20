@@ -3,5 +3,6 @@
 $hn = 'localhost:3306';
 $db = 'uathletics';
 $un = 'root';
-$pw = ''; 
+$pw = ''; //for MAC 'root'
+
 ?>

@@ -32,7 +32,7 @@ if($conn->connect_error) die($conn->connect_error);
 
 <div class="center">
 <?php
-$query = "Select team_id, team_name from team order by team_id asc"; 
+$query = "Select team_id, team_name from team order by team_name ASC"; 
 
 $result = $conn->query($query); 
 
@@ -46,7 +46,7 @@ $id=$row["team_id"];
 $teamName=$row["team_name"];
 ?>
 <div class="container">
-	  <p class="title"><?php echo "$teamName "; ?></p>
+	  <p class="title"><?php echo "$teamname "; ?></p>
 	  <div class="overlay"></div>
 	  <div class="button"><a href="team-details.php?teamId=<?php echo $id ?>"> Click Here </a></div>
 </div>

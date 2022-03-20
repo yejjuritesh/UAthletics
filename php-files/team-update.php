@@ -16,12 +16,12 @@ if(!$result) die($conn->error);
 
 if ($result->num_rows > 0) {
 
-$row = $result->fetch_assoc();
+$row = $result->fetch_assoc()
 $id=$row["team_id"];
 $teamName=$row["team_name"];
 $sportName=$row["sport_name"];
 $teamEmail=$row["email"] ;
-$establishedDate=$row["est_date"];
+$establishedDate=$row["established_date"];
 $numberOfPlayers=$row["number_of_players"];
 ?>
 
@@ -47,29 +47,27 @@ $numberOfPlayers=$row["number_of_players"];
       </ul>
     </div>
   </nav>
-<div class="update-form">
-	<form method="POST" action="team-update.php?teamId=<?php echo $teamId ?>">
+<div class="update-form" method = "post">
+	<form>
 		<h1 style="text-align:center">Update Team</h1>
 		<div class="content">
 		  <div class="input-field">
-			Team Name: <input type="text" value="<?php echo "$teamName "; ?>" name="team_name">
+			Team Name: <input type="text" placeholder="<?php echo "$teamName "; ?>" name="team-name">
 		  </div>
 		  <div class="input-field">
-			Sport Name: <input type="text" value="<?php echo "$sportName "; ?>" name="sport_name">
+			Sport Name: <input type="text" placeholder="<?php echo "$sportName "; ?>" name="sport-name">
 		  </div>
 		  <div class="input-field">
-			Team Email: <input type="text" value="<?php echo "$teamEmail "; ?>" name="team_email">
+			Team Email: <input type="text" placeholder="<?php echo "$teamEmail "; ?>" name="team-email">
 		  </div>
 		  <div class="input-field">
-			Established Date: <input type="text" value="<?php echo "$establishedDate "; ?>" name="est_date">
+			Established Date: <input type="text" placeholder="<?php echo "$establishedDate "; ?>" name="est-date">
 		  </div>
 		  <div class="input-field">
-			Number of Players: <input type="text" value="<?php echo "$numberOfPlayers "; ?>" name="no_players">
+			Number of Players: <input type="text" placeholder="<?php echo "$numberOfPlayers "; ?>" name="number-Of-Players">
 		  </div>
 		<div class="action">
-			<input type='hidden' name='update' value='yes'>
-			<input type='hidden' name='teamId' value='$teamId'>
-			<button style="text-align:center"><!--<a href="team-update.php?teamId=<?php echo $teamId ?>" style="color: #777; text-decoration:none">-->Submit</a></button>
+		  <button style="text-align:center"><a href="teams.php" style="color: #777; text-decoration:none">Submit</a></button>
 		  
 		</div>
 	</form>
@@ -78,33 +76,27 @@ $numberOfPlayers=$row["number_of_players"];
 </html>
 
 <?php
+
+$teamName=$_POST["team-name"];
+$sportName=$_POST["sport-name"];
+$teamEmail=$_POST["team-email"] ;
+$establishedDate=$_POST["est-date"];
+$numberOfPlayers=$_POST["number-of-players"];
+
+$Query2 = "select sport_id from sport where sport_name = '$sportName' "
+$result = $conn->query($query); 
+if(!$result) die($conn->error); 
+if ($result->num_rows > 0) {
+$row = $result->fetch_assoc()
+$sportId=$row["sport_id"];
+
+$updateQuery = "update team set team_name='$teamName', sport_id = '$sportId', email='$teamEmail', established_date='$establishedDate' where team_id = '$id'"
+
+if ($conn->query($updateQuery) === TRUE) {
+	echo "Records updated: ".$student_id."-".$name."-".$age."-".$gender;
+} else {
+	echo "Error: ".$updateQuery."<br>".$conn->error;
 }
-	if(isset($_POST['update'])) {
-		$teamName=$_POST["team_name"];
-		$sportName=$_POST["sport_name"];
-		$teamEmail=$_POST["team_email"] ;
-		$establishedDate=$_POST["est_date"];
-		$numberOfPlayers=$_POST["no_players"];
-
-		$Query2 = "select sport_id from sport where sport_name = '$sportName' ";
-		$result = $conn->query($query); 
-		if(!$result) die($conn->error); 
-		if ($result->num_rows > 0) {
-		$row = $result->fetch_assoc();
-		$sportId=$row["sport_id"];
-
-		$updateQuery = "update team set team_name='$teamName', sport_id = '$sportId', email='$teamEmail', est_date='$establishedDate' where team_id = '$id'";
-
-		if ($conn->query($updateQuery) === TRUE) {
-			// echo "Records updated: ".$teamName."-".$sportName."-".$teamEmail."-".$establishedDate;
-			header("Location: team-details.php?teamId=$teamId");
-		} else {
-			echo "Error: ".$updateQuery."<br>".$conn->error;
-		}
-	}
-	
-}
-
 
 
 mysqli_close($conn);

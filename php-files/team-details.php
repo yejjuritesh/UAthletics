@@ -16,14 +16,13 @@ if(!$result) die($conn->error);
 
 if ($result->num_rows > 0) {
 
-$row = $result->fetch_assoc();
+$row = $result->fetch_assoc()
 $id=$row["team_id"];
 $teamName=$row["team_name"];
 $sportName=$row["sport_name"];
 $teamEmail=$row["email"] ;
-$establishedDate=$row["est_date"];
+$establishedDate=$row["established_date"];
 $numberOfPlayers=$row["number_of_players"];
-$income=$row["income"];
 
 $query = "Select sum(transaction_amount) as team_income from transaction_ledger where team_id = '".$teamId."' and transaction_type = 'income' group by team_id"; 
 
@@ -33,9 +32,8 @@ if(!$result) die($conn->error);
 
 if ($result->num_rows > 0) {
 
-$incomeRow = $result->fetch_assoc();
-$income= $income + $incomeRow["team_income"];
-}
+$incomeRow = $result->fetch_assoc()
+$income=$incomeRow["team_income"];
 ?>
 <html>
 <head>
@@ -82,20 +80,14 @@ $income= $income + $incomeRow["team_income"];
 					<td>Income: </td> <td><?php echo "$income "; ?></td>
 				</tr>
 			</table>
-			<a href="team-delete.php?teamId=<?php echo $id ?> " style="color: #777; ">
-				Delete team
-			</a>
 		</div>
 		<div class="action">
-		  <button style="text-align:center"><a href="team-update.php?teamId=<?php echo $id ?>" style="color: #777; text-decoration:none">Edit Team Details</a></button>
+		  <button style="text-align:center"><a href="team-update.php?teamid=<?php echo $teamId ?>" style="color: #777; text-decoration:none">Edit Team Details</a></button>
 		</div>
 	</form>
 </div>
 </body>
 </html>
 <?php
-}
-else {
-  echo "0 results";}
 mysqli_close($conn);
 ?>
