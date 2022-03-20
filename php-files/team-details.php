@@ -27,7 +27,7 @@ $id=$row["team_id"];
 $teamName=$row["team_name"];
 $sportName=$row["sport_name"];
 $teamEmail=$row["email"] ;
-$establishedDate=$row["established_date"];
+$establishedDate=$row["est_date"];
 $numberOfPlayers=$row["number_of_players"];
 }
 $query = "Select sum(transaction_amount) as team_income from transaction_ledger where team_id = '".$teamId."' and transaction_type = 'income' group by team_id"; 
@@ -90,7 +90,7 @@ $income=$incomeRow["team_income"];
 			</table>
 		</div>
 		<div class="action">
-		  <button style="text-align:center"><a href="team-update.php?teamid=<?php echo $teamId ?>" style="color: #777; text-decoration:none">Edit Team Details</a></button>
+		  <button style="text-align:center"><a href="team-update.php?teamId=<?php echo $teamId ?>" style="color: #777; text-decoration:none">Edit Team Details</a></button>
 		</div>
 </div>
 </body>
