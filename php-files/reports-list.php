@@ -26,7 +26,7 @@
     <ul class="grid">
       <li>
         <p>Team Vs Profits</p>
-        <a href="teamsVsProfits.php" class="red-btn">Add Team</a>
+        <a href="teamsVsProfits.php" class="red-btn">Check Team Profits</a>
       </li>
       </div>
 </body>

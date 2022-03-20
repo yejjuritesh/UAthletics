@@ -9,7 +9,7 @@ end_date date,
 salary_type varchar(255),
 Urole varchar(255),
 primary key (employee_id),
-primary key(first_name, last_name)
+unique(first_name, last_name)
 )
 
 CREATE TABLE credentials (
