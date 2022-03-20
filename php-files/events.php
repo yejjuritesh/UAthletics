@@ -1,3 +1,12 @@
+<?php
+
+require_once  'db.php';
+
+$conn = new mysqli($hn, $un, $pw, $db);
+if($conn->connect_error) die($conn->connect_error);
+
+?>
+
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="../css-files/teams.css">
@@ -20,47 +29,34 @@
     </div>
   </nav>
   <button onclick="location.href='add-event.php'" style="padding:20px;margin-left:780px;margin-top:70px" >Add Event</button>
-<div class="center">
-	<div class="container">
-	  <p class="title">Event 1</p>
-	  <div class="overlay"></div>
-	  <div class="button"><a href="event-details.php"> Click Here </a></div>
+	<div class="center">
+		<?php
+		$query = "Select event_id, event_name from events order by event_id asc"; 
+
+		$result = $conn->query($query); 
+
+		if(!$result) die($conn->error); 
+
+		if ($result->num_rows > 0) {
+
+			while($row = $result->fetch_assoc())
+			{
+				$id=$row["event_id"];
+				$eventName=$row["event_name"];
+		?>
+		<div class="container">
+			  <p class="title"><?php echo "$eventName "; ?></p>
+			  <div class="overlay"></div>
+			  <div class="button"><a href="event-details.php?eventId=<?php echo $id ?>"> Click Here </a></div>
+		</div>
+				
+		<?php
+			}
+		}
+		else {
+		  echo "0 results";}
+		mysqli_close($conn);
+		?>
 	</div>
-	<div class="container">
-	   <p class="title">Event 2</p>
-	  <div class="overlay"></div>
-	  <div class="button"><a href="event-details.php"> Click Here </a></div>
-	</div>
-	<div class="container">
-	  <p class="title">Event 3</p>
-	  <div class="overlay"></div>
-	  <div class="button"><a href="event-details.php"> Click Here </a></div>
-	</div>
-	<div class="container">
-	  <p class="title">Event 4</p>
-	  <div class="overlay"></div>
-	  <div class="button"><a href="event-details.php"> Click Here </a></div>
-	</div>
-	<div class="container">
-	  <p class="title">Event 5</p>
-	  <div class="overlay"></div>
-	  <div class="button"><a href="event-details.php"> Click Here </a></div>
-	</div>
-	<div class="container">
-	   <p class="title">Event 6</p>
-	  <div class="overlay"></div>
-	  <div class="button"><a href="event-details.php"> Click Here </a></div>
-	</div>
-	<div class="container">
-	  <p class="title">Event 7</p>
-	  <div class="overlay"></div>
-	  <div class="button"><a href="event-details.php"> Click Here </a></div>
-	</div>
-	<div class="container">
-	  <p class="title">Event 8</p>
-	  <div class="overlay"></div>
-	  <div class="button"><a href="event-details.php"> Click Here </a></div>
-	</div>
-</div>
 </body>
 </html>

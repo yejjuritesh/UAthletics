@@ -1,3 +1,32 @@
+<?php
+
+require_once  'db.php';
+
+$conn = new mysqli($hn, $un, $pw, $db);
+
+if($conn->connect_error) die($conn->connect_error);
+
+$eventId = $_GET['eventId'];
+
+$query = "Select * from events where event_id = '".$eventId."' order by event_name ASC"; 
+
+$result = $conn->query($query); 
+
+if(!$result) die($conn->error); 
+
+if ($result->num_rows > 0) {
+	
+	$row = $result->fetch_assoc();
+	$id=$row["event_id"];
+	$event_name=$row["event_name"];
+	$location=$row["location"];
+	$teams=$row["teams"] ;
+	$email = $row["email"] ;
+	$event_date=$row["event_date"];
+	$ticket_price=$row["ticket_price"];
+	$event_image=$row["event_image"];
+?>
+
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="../css-files/team-update.css">
@@ -20,40 +49,43 @@
     </div>
   </nav>
 <div class="update-form">
-	<form>
-		<h1 style="text-align:center">Team Details</h1>
+	<form method='POST' action="update-event.php?eventId=<?php echo $id ?>">
+		<h1 style="text-align:center">Event Details</h1>
 		<div class="content">
-		  	<table background="">
+			<table background="">
 				<thead>
-					<th><h3>Event 1</h3></th>
+					<th><h3><?php echo "$event_name "; ?></h3></th>
 				</thead>
 				<tr>
-					<td>Event Name: </td> <td>Basket ball tournament</td>
+					<td>Location:	</td> <td><?php echo "$location "; ?> </td>
 				</tr>
 				<tr>
-					<td>Location: </td> <td>Salt Lake City </td>
+					<td>Teams playing: </td> <td><?php echo "$teams";?> </td>
 				</tr>
 				<tr>
-					<td>Teams playing: </td> <td>Team 1, Team 2 </td>
+					<td>Email id: </td> <td><?php echo "$email "; ?> </td>
 				</tr>
 				<tr>
-					<td>Email id: </td> <td>10/28/2001 </td>
+					<td>Event Date: </td> <td><?php echo "$event_date "; ?> </td>
 				</tr>
 				<tr>
-					<td>Event Date: </td> <td>3/28/2022 </td>
-				</tr>
-				<tr>
-					<td>Ticket Price: </td> <td>$ 13 </td>
-				</tr>
-				<tr>
-					<td>Event Image: </td> <td>image.jpg </td>
+					<td>Ticket Price: </td> <td><?php echo "$ticket_price "; ?></td>
 				</tr>
 			</table>
+			<a href="event-delete.php?eventId=<?php echo $id ?> " style="color: #777; ">
+				Delete event
+			</a>
 		</div>
 		<div class="action">
-		  <button style="text-align:center"><a href="update-event.php" style="color: #777; text-decoration:none">Update Event</a></button>
+		  <button style="text-align:center"><a href="update-event.php?eventId=<?php echo $id ?>" style="color: #777; text-decoration:none">Edit Event Details</a></button>
 		</div>
 	</form>
 </div>
 </body>
 </html>
+<?php
+}
+else {
+  echo "0 results";}
+mysqli_close($conn);
+?>

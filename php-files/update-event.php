@@ -1,3 +1,31 @@
+<?php
+
+require_once  'db.php';
+
+$conn = new mysqli($hn, $un, $pw, $db);
+
+if($conn->connect_error) die($conn->connect_error);
+
+$eventId = $_GET['eventId'];
+
+$query = "Select * from events where event_id = '".$eventId."' order by event_name ASC"; 
+
+$result = $conn->query($query); 
+
+if(!$result) die($conn->error); 
+
+if ($result->num_rows > 0) {
+	$row = $result->fetch_assoc();
+	$id=$row["event_id"];
+	$event_name=$row["event_name"];
+	$location=$row["location"];
+	$teams=$row["teams"] ;
+	$email = $row["email"] ;
+	$event_date=$row["event_date"];
+	$ticket_price=$row["ticket_price"];
+	$event_image=$row["event_image"];
+?>
+
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="../css-files/team-update.css">
@@ -20,36 +48,57 @@
     </div>
   </nav>
 <div class="update-form">
-	<form>
+	<form  method="POST" action="update-event.php?eventId=<?php echo $eventId ?>">
 		<h1 style="text-align:center">Update Event</h1>
 		<div class="content">
 		  <div class="input-field">
-			<input type="name" placeholder="Event Name" id="event-name" value="Event Name" autocomplete="nope">
+			Event Name: <input type="name" name="event_name" value="<?php echo "$event_name "; ?>" autocomplete="nope">
 		  </div>
 		  <div class="input-field">
-			<input type="name" placeholder="Location" id="location" value="Location" autocomplete="nope">
+			Location: <input type="name" name="location" value="<?php echo "$location "; ?>" autocomplete="nope">
 		  </div>
 		  <div class="input-field">
-			<input type="name" placeholder="Team A, Team B" id="teams" value="Teams playing" autocomplete="nope">
+			Teams playing: <input type="name" name="teams" value="<?php echo "$teams "; ?>" autocomplete="nope">
 		  </div>
 		  <div class="input-field">
-			<input type="name" placeholder="Email" id="email" value="Email id" autocomplete="nope">
+			Email id: <input type="name" name="email" value="<?php echo "$email "; ?>" autocomplete="nope">
 		  </div>
 		  <div class="input-field">
-			<input type="name" placeholder="Event date" id="event-date" value="Event date" autocomplete="nope">
+			Event date: <input type="name" name="event_date" value="<?php echo "$event_date "; ?>" autocomplete="nope">
 		  </div>
 		  <div class="input-field">
-			<input type="name" placeholder="Ticket Price" id="ticket-price" value="Ticket Price" autocomplete="nope">
-		  </div>
-		  <div class="input-field">
-			<input type="name" placeholder="Event Image" id="event-image" value="Event Image: image.png" autocomplete="nope">
+			Ticket Price: <input type="name" name="ticket_price" value="<?php echo "$ticket_price "; ?>" autocomplete="nope">
 		  </div>		  
 		</div>
 		<div class="action">
-		  <button style="text-align:center"><a href="events.php" style="color: #777; text-decoration:none">Submit</a></button>
-		  
+			<input type='hidden' name='update' value='yes'>
+			<input type='hidden' name='eventId' value='$eventId'>
+			<button style="text-align:center">Submit</a></button>
 		</div>
 	</form>
 </div>
 </body>
 </html>
+
+<?php
+}
+if(isset($_POST['update'])) {
+	$event_name=$_POST["event_name"];
+	$location=$_POST["location"];
+	$teams=$_POST["teams"] ;
+	$email = $_POST["email"] ;
+	$event_date=$_POST["event_date"];
+	$ticket_price=$_POST["ticket_price"];
+	
+	$updateQuery = "update events set event_name='$event_name', location = '$location', teams='$teams', email='$email', event_date='$event_date', ticket_price='$ticket_price'  where event_id = '$id'";
+
+	if ($conn->query($updateQuery) === TRUE) {
+		
+		header("Location: event-details.php?eventId=$eventId");
+	} else {
+		echo "Error: ".$updateQuery."<br>".$conn->error;
+	}
+}
+	
+mysqli_close($conn);
+?>

@@ -27,7 +27,7 @@
 			<input type="name" placeholder="Team Name" name="team_name" autocomplete="nope">
 		  </div>
 		  <div class="input-field">
-			<input type="name" placeholder="Sport Type" name="sport_type" autocomplete="nope">
+			<input type="name" placeholder="Sport Name" name="sport_name" autocomplete="nope">
 		  </div>
 		  <div class="input-field">
 			<input type="name" placeholder="Number of players" name="no_players" autocomplete="nope">
@@ -49,7 +49,7 @@
 		  </div>		  
 		</div>
 		<div class="action">
-		  <button style="text-align:center"><a href="teams.php" style="color: #777; text-decoration:none">Submit</a></button>
+		  <button style="text-align:center"><a href="add-team.php" style="color: #777; text-decoration:none">Submit</a></button>
 		  
 		</div>
 	</form>
@@ -66,22 +66,28 @@ $conn = new mysqli($hn, $un, $pw, $db);
 if($conn->connect_error) die($conn->connect_error);
 
 //check if ISBN exists
-if(isset($_POST['team_name']) && isset($_POST['sport_type']) && isset($_POST['no_players']))
+if(isset($_POST['team_name']) && isset($_POST['sport_name']) && isset($_POST['no_players']))
 {
-	
 	//Get data from POST object
 	$team_name = $_POST['team_name'];
-	$sport_type = $_POST['sport_type'];
+	$sport_name = $_POST['sport_name'];
 	$no_players = $_POST['no_players'];
 	$email = $_POST['email'];
 	$est_date = $_POST['est_date'];
 	$income = $_POST['income'];
 	$team_icon = $_POST['team_icon'];
 	
-	$query_temp = "SELECT sport_id from sport where sport_name = ".$sport_type;
-		
+	$query_temp = "SELECT sport_id from sport where sport_name = '".$sport_name."'";
 	
-	$query = "INSERT INTO team (team_name, sport_id, email, est_date, no_players, income, team_icon) VALUES ('$team_name', 1, '$email', '$est_date', '$no_players', '$income', '$team_icon')";
+	$result = $conn->query($query_temp);
+	if(!$result) die($conn->error);
+	
+	if ($result->num_rows > 0) {
+		$sportsRow = $result->fetch_assoc();
+		$sport_id= $sportsRow["sport_id"];
+	}
+	
+	$query = "INSERT INTO team (team_name, sport_id, email, est_date, no_players, income, team_icon) VALUES ('$team_name', '$sport_id', '$email', '$est_date', '$no_players', '$income', '$team_icon')";
 	
 	//echo $query.'<br>';
 	$result = $conn->query($query);
