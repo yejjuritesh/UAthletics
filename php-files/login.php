@@ -1,74 +1,3 @@
-<?php
-
-require_once 'db.php';
-
-$conn = new mysqli($hn, $un, $pw, $db);
-if ($conn->connect_error)
-    die($conn->connect_error);
-
-
-if (isset($_POST['uname']) && isset($_POST['psw'])) {
-	
-	//Get values from login screen
-	$tmp_username = mysql_entities_fix_string($conn, $_POST['uname']);
-	$tmp_password = mysql_entities_fix_string($conn, $_POST['psw']);
-	
-	//get password from DB w/ SQL
-	$query = "SELECT * FROM credentials join employee on employee.employee_id = credentials.employee_id WHERE userName = '$tmp_username'";
-	
-	$result = $conn->query($query); 
-	if(!$result) die($conn->error);
-	
-	$rows = $result->num_rows;
-	$passwordFromDB="";
-	for($j=0; $j<$rows; $j++)
-	{
-		$result->data_seek($j); 
-		$row = $result->fetch_array(MYSQLI_ASSOC);
-		$passwordFromDB = $row['Upassword'];
-        $user_role=$row['Urole'];
-	
-	}
-	
-	//Compare passwords
-	if(password_verify($tmp_password,$passwordFromDB))
-	{
-		echo "successful login<br>";
-
-		session_start();
-		$_SESSION['username'] = $tmp_username;
-        $_SESSION['role']=$user_role;
-        
-		
-		 header("Location: home.php");
-	}
-	else
-	{
-		?>
-		<script>
-         alert("LOGIN ERROR");
-</script>
-<?php
-	}	
-	
-}
-
-$conn->close();
-
-
-//sanitization functions
-function mysql_entities_fix_string($conn, $string){
-	return htmlentities(mysql_fix_string($conn, $string));	
-}
-
-function mysql_fix_string($conn, $string){
-	$string = stripslashes($string);
-	return $conn->real_escape_string($string);
-}
-
-
-
-?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -113,18 +42,18 @@ function mysql_fix_string($conn, $string){
 
                 </div>
                 <div class="col login">
-                    <form action="login.php" method = "post">
+                    <form action="home.php">
                         <div class="titles">
                             <h3>Employee Login</h3>
                         </div>
                         <div class="form-group">
-                            <input type="text" placeholder="Enter Username" class="form-input" name="uname" required >
+                            <input type="text" placeholder="Email" class="form-input">
                             <div class="input-icon">
                                 <i class="fas fa-user"></i>
                             </div>
                         </div>
                         <div class="form-group">
-                            <input type="password" placeholder="Enter Password" class="form-input" name="psw" required >
+                            <input type="password" placeholder="Password" class="form-input">
                             <div class="input-icon">
                                 <i class="fas fa-user-lock"></i>
                             </div>

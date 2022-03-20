@@ -20,32 +20,32 @@
     </div>
   </nav>
 <div class="update-form">
-	<form>
+	<form method='POST' action='add-team.php'>
 		<h1 style="text-align:center">Add Team</h1>
 		<div class="content">
 		  <div class="input-field">
-			<input type="name" placeholder="Team Name" id="team-name" value="Team Name" autocomplete="nope">
+			<input type="name" placeholder="Team Name" name="team_name" autocomplete="nope">
 		  </div>
 		  <div class="input-field">
 			<input type="name" placeholder="Sport Name" name="sport_name" autocomplete="nope">
 		  </div>
 		  <div class="input-field">
-			<input type="name" placeholder="Number of players" id="no-players" value="Number of players" autocomplete="nope">
+			<input type="name" placeholder="Number of players" name="no_players" autocomplete="nope">
 		  </div>
 		  <div class="input-field">
-			<input type="name" placeholder="Email" id="email" value="Team Email id" autocomplete="nope">
+			<input type="name" placeholder="Email" name="email" autocomplete="nope">
 		  </div>
 		  <div class="input-field">
-			<input type="name" placeholder="Est. date" id="est-date" value="Est. date" autocomplete="nope">
+			<input type="name" placeholder="Est. date" name="est_date" autocomplete="nope">
+		  </div>
+		  <!--<div class="input-field">
+			<input type="name" placeholder="Team Rank" name="rank" value="Team Rank" autocomplete="nope">
+		  </div>-->
+		  <div class="input-field">
+			<input type="name" placeholder="Income" name="income" autocomplete="nope">
 		  </div>
 		  <div class="input-field">
-			<input type="name" placeholder="Team Rank" id="rank" value="Team Rank" autocomplete="nope">
-		  </div>
-		  <div class="input-field">
-			<input type="name" placeholder="Income" id="income" value="Income" autocomplete="nope">
-		  </div>
-		  <div class="input-field">
-			<input type="name" placeholder="Image" id="team-icon" value="Team Display Image" autocomplete="nope">
+			<input type="name" placeholder="Image" name="team_icon" autocomplete="nope">
 		  </div>		  
 		</div>
 		<div class="action">
@@ -53,7 +53,6 @@
 		  
 		</div>
 	</form>
-	
 </div>
 </body>
 </html>

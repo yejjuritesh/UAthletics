@@ -25,7 +25,7 @@
 <div class="container">
   <p class="title">Reports</p>
   <div class="overlay"></div>
-  <div class="button"><a href="reports.php"> Click Here </a></div>
+  <div class="button"><a href="reports-list.php"> Click Here </a></div>
 </div>
 <div class="container">
    <p class="title">Edit data</p>
