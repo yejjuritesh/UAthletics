@@ -5,23 +5,24 @@ $conn = new mysqli($hn, $un, $pw, $db);
 
 if($conn->connect_error) die($conn->connect_error);
 
-$query = "Select team_name, sum(transaction_amount) as team_profits from team join on transaction_ledger where team.team_id = transaction_ledger.team_id group by team_id"; 
+$query = "Select DISTINCT team.team_name, sum(transaction_ledger.transaction_amount) as team_profits from team join transaction_ledger on team.team_id = transaction_ledger.team_id group by team.team_id";
 
 $result = $conn->query($query); 
 
 if(!$result) die($conn->error);
 
 $dataPoints = array();
+
 while($row = $result->fetch_assoc())
 {
-$teamId=$row["team_id"];
+$teamId=$row["team_name"];
 $teamProfits=$row["team_profits"];
-array_push($dataPoints,array("x"=> $teamId, "y"=> $teamProfits));
+array_push($dataPoints,array("label"=> $teamId, "y"=> $teamProfits));
 }
 ?>
 <!DOCTYPE HTML>
 <html>
-<head>  
+<head>
 <script>
 window.onload = function () {
  
@@ -30,7 +31,7 @@ var chart = new CanvasJS.Chart("chartContainer", {
 	exportEnabled: true,
 	theme: "light1", // "light1", "light2", "dark1", "dark2"
 	title:{
-		text: "Simple Column Chart with Index Labels"
+		text: "Team Vs Profits"
 	},
 	axisY:{
 		includeZero: true
@@ -40,11 +41,10 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		//indexLabel: "{y}", //Shows y value on all Data Points
 		indexLabelFontColor: "#5A5757",
 		indexLabelPlacement: "outside",   
-		dataPoints: <?php echo json_encode($dataPoints, JSON_NUMERIC_CHECK); ?>
+		dataPoints: <?php echo json_encode($dataPoints,JSON_NUMERIC_CHECK); ?>
 	}]
 });
 chart.render();
- 
 }
 </script>
 </head>
