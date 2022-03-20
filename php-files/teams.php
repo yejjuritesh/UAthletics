@@ -32,7 +32,7 @@ if($conn->connect_error) die($conn->connect_error);
 
 <div class="center">
 <?php
-$query = "Select team_id, team_name from team order by team_id asc"; 
+$query = "Select team_id, team_name from team order by team_name ASC"; 
 
 $result = $conn->query($query); 
 
