@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+if($_SESSION['role']=='user' or $_SESSION['role']=='admin'){
 //import credentials for db
 require_once  'db.php';
 
@@ -28,4 +30,7 @@ else {
   echo "Cannot delete the team";
 }
 mysqli_close($conn);
+}else{
+echo 'Un-Authorized';
+}
 ?>
