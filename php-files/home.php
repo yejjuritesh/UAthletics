@@ -1,4 +1,7 @@
-
+<?php
+session_start();
+if($_SESSION['role']=='user' or $_SESSION['role']=='admin'){
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,3 +38,8 @@
 </div>
 </body>
 </html>
+<?php
+}else{
+echo 'Un-Authorized';
+}
+?>
