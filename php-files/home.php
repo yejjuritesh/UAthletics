@@ -20,7 +20,7 @@ if($_SESSION['role']=='user' or $_SESSION['role']=='admin'){
 		<li><a href="home.php">Home</a></li>
 		<li><a href="teams.php">Teams</a></li>
 		<li><a href="events.php">Events</a></li>
-    	<li><a href="login.php">Logout</a></li> 
+    	<li><a href="logout.php">Logout</a></li> 
       </ul>
     </div>
   </nav>
