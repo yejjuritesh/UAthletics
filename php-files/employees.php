@@ -1,7 +1,7 @@
 <?php
 
 session_start();
-if($_SESSION['role']=='user' or $_SESSION['role']=='admin'){
+if($_SESSION['role']=='admin'){
 	
 require_once  'db.php';
 
