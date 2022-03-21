@@ -139,7 +139,7 @@ input[type=text] {
 }
 .container {
   position: relative;
-  margin: 35px;
+  margin: 100px 0px;
   width: 350px;
   height: 250px;
   background-color: red;
@@ -187,12 +187,13 @@ img {
 }
 
 .button {
-  position: absolute;
-  width: 350px;
+  position: relative;
+  width: 250px;
   left: 0;
   top: 150px;
   text-align: center;
   opacity: 0;
+  margin:0 auto;
   transition: opacity 0.35s ease;
 }
 
@@ -211,11 +212,9 @@ img {
 
 .center {
   /* display: flex; */
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  min-height: 100vh;
   display: grid;
   grid-template-columns: repeat(4,1fr);
-  grid-gap: 10px;
+  gap: 0px 0px;
+  margin: 0 auto;
+  grid-template-columns: auto auto auto;
 }
