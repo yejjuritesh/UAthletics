@@ -1,5 +1,6 @@
 <?php
-
+session_start();
+if($_SESSION['role']=='user' or $_SESSION['role']=='admin'){
 require_once  'db.php';
 
 $conn = new mysqli($hn, $un, $pw, $db);
@@ -24,7 +25,7 @@ if($conn->connect_error) die($conn->connect_error);
     	<li><a href="home.php">Home</a></li>
 		<li><a href="teams.php">Teams</a></li>
 		<li><a href="events.php">Events</a></li>
-    	<li><a href="login.php">Logout</a></li> 
+    	<li><a href="logout.php">Logout</a></li> 
       </ul>
     </div>
   </nav>
@@ -57,6 +58,9 @@ $teamName=$row["team_name"];
 else {
   echo "0 results";}
 mysqli_close($conn);
+}else{
+echo 'Un-Authorized';
+}
 ?>
 </div>
 </body>
