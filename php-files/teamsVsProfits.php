@@ -1,4 +1,6 @@
 <?php
+session_start();
+if($_SESSION['role']=='user' or $_SESSION['role']=='admin'){
  require_once  'db.php';
 
 $conn = new mysqli($hn, $un, $pw, $db);
@@ -49,7 +51,26 @@ chart.render();
 </script>
 </head>
 <body>
+<nav>
+    <div class="brand">
+      <h3><a href="home.php" style="text-decoration:none; color:white">U Athletics</a></h3>
+    </div>
+    <div class="navigation">
+      <ul class="menu">
+		<!-- <li><a href="profile.php">My Profile</a></li> -->
+    	<li><a href="home.php">Home</a></li>
+		<li><a href="teams.php">Teams</a></li>
+		<li><a href="events.php">Events</a></li>
+    	<li><a href="logout.php">Logout</a></li> 
+      </ul>
+    </div>
+  </nav>
 <div id="chartContainer" style="height: 370px; width: 100%;"></div>
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </body>
 </html>
+<?php
+}else{
+echo 'Un-Authorized';
+}
+?>
