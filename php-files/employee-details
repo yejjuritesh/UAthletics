@@ -1,0 +1,96 @@
+<?php
+
+require_once  'db.php';
+
+$conn = new mysqli($hn, $un, $pw, $db);
+
+if($conn->connect_error) die($conn->connect_error);
+
+$employeeId = $_GET['employee_id'];
+
+$query = "Select * from employee where employee_id = '".$employeeId."' order by employee_id ASC"; 
+
+	$firstName = "";
+	$lastName = "";
+	$address = "";
+	$startDate = "";
+	$endDate = "";
+	$salaryType = "";
+	$uRole = "";
+$result = $conn->query($query); 
+
+if(!$result) die($conn->error); 
+
+if ($result->num_rows > 0) {
+
+while($row = $result->fetch_assoc()){
+$firstName = $row["first_name"];
+$lastName = $row["last_name"];
+$address = $row["address"];
+$startDate = $row["start_date"];
+$endDate = $row["end_date"];
+$salaryType = $row["salary_type"];
+$uRole = $row["Urole"];
+}
+}
+?>
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="../css-files/team-update.css">
+<link href="https://fonts.googleapis.com/css?family=Arima+Madurai" rel="stylesheet">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.13/css/all.css" integrity="sha384-DNOHZ68U8hZfKXOrtjWvjxusGo9WQnrNx2sqG0tfsghAvtVlRW3tvkXWZh58N9jp" crossorigin="anonymous">
+</head>
+<body>
+<nav>
+    <div class="brand">
+      <h3><a href="home.php" style="text-decoration:none; color:white">U Athletics</a></h3>
+    </div>
+    <div class="navigation">
+      <ul class="menu">
+		<!-- <li><a href="profile.php">My Profile</a></li> -->
+    	<li><a href="home.php">Home</a></li>
+		<li><a href="teams.php">Teams</a></li>
+		<li><a href="events.php">Events</a></li>
+    	<li><a href="login.php">Logout</a></li> 
+      </ul>
+    </div>
+  </nav>
+<div class="update-form">
+		<h1 style="text-align:center">Employee Details</h1>
+		<div class="content">
+		  	<table background="">
+				<thead>
+					<th><h3>Employee ID: <?php echo "$employeeId "; ?></h3></th>
+				</thead>
+				<tr>
+					<td>First Name: </td> <td><?php echo "$firstName "; ?> </td>
+				</tr>
+				<tr>
+					<td>Last Name: </td> <td><?php echo "$lastName";?> </td>
+				</tr>
+				<tr>
+					<td>Address: </td> <td><?php echo "$address "; ?> </td>
+				</tr>
+				<tr>
+					<td>Start Date: </td> <td><?php echo "$startDate "; ?> </td>
+				</tr>
+				<tr>
+					<td>End Date: </td> <td><?php echo "$endDate "; ?></td>
+				</tr>
+				<tr>
+					<td>Type of Employee: </td> <td><?php echo "$salaryType "; ?></td>
+				</tr>
+				<tr>
+					<td>Employee Role: </td> <td><?php echo "$uRole "; ?></td>
+				</tr>
+			</table>
+		</div>
+		<div class="action">
+		  <button style="text-align:center"><a href="employee-update.php?employee_id=<?php echo $employeeId ?>" style="color: #777; text-decoration:none">Edit Team Details</a></button>
+		</div>
+</div>
+</body>
+</html>
+<?php
+mysqli_close($conn);
+?>
