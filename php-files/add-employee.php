@@ -1,6 +1,8 @@
 <?php
+session_start();
+if($_SESSION['role']=='admin'){
 //import credentials for db
-require_once  'loggedin.php';
+require_once  'db.php';
 
 //connect to db
 $conn = new mysqli($hn, $un, $pw, $db);
@@ -47,7 +49,7 @@ if(isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['em
     	<li><a href="home.php">Home</a></li>
 		<li><a href="teams.php">Teams</a></li>
 		<li><a href="events.php">Events</a></li>
-    	<li><a href="login.php">Logout</a></li> 
+    	<li><a href="logout.php">Logout</a></li> 
       </ul>
     </div>
   </nav>
@@ -87,5 +89,9 @@ if(isset($_POST['first_name']) && isset($_POST['last_name']) && isset($_POST['em
 </div>
 </body>
 </html>
-
+<?php
+}else{
+echo 'Un-Authorized';
+}
+?>
 
