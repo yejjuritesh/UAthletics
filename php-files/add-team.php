@@ -1,3 +1,7 @@
+<?php
+session_start();
+if($_SESSION['role']=='user' or $_SESSION['role']=='admin'){
+?>
 <html>
 <head>
 <link rel="stylesheet" type="text/css" href="../css-files/team-update.css">
@@ -15,7 +19,7 @@
     	<li><a href="home.php">Home</a></li>
 		<li><a href="teams.php">Teams</a></li>
 		<li><a href="events.php">Events</a></li>
-    	<li><a href="login.php">Logout</a></li> 
+    	<li><a href="logout.php">Logout</a></li> 
       </ul>
     </div>
   </nav>
@@ -96,7 +100,10 @@ if(isset($_POST['team_name']) && isset($_POST['sport_name']) && isset($_POST['no
 	header("Location: teams.php");//this will return you to the view all page	
 	
 }
-
+}else{
+echo 'Un-Authorized';
+}
+?>
 
 
 ?>
