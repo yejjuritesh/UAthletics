@@ -1,5 +1,7 @@
 <?php
 
+session_start();
+if($_SESSION['role']=='user' or $_SESSION['role']=='admin'){
 require_once  'db.php';
 
 $conn = new mysqli($hn, $un, $pw, $db);
@@ -61,7 +63,7 @@ $income=$incomeRow["team_income"];
     	<li><a href="home.php">Home</a></li>
 		<li><a href="teams.php">Teams</a></li>
 		<li><a href="events.php">Events</a></li>
-    	<li><a href="login.php">Logout</a></li> 
+    	<li><a href="logout.php">Logout</a></li> 
       </ul>
     </div>
   </nav>
@@ -97,4 +99,7 @@ $income=$incomeRow["team_income"];
 </html>
 <?php
 mysqli_close($conn);
+}else{
+echo 'Un-Authorized';
+}
 ?>
