@@ -1,4 +1,7 @@
-
+<?php
+session_start();
+if($_SESSION['role']=='user' or $_SESSION['role']=='admin'){
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,7 +21,7 @@
 		<li><a href="home.php">Home</a></li>
 		<li><a href="teams.php">Teams</a></li>
 		<li><a href="events.php">Events</a></li>
-    	<li><a href="login.php">Logout</a></li> 
+    	<li><a href="logout.php">Logout</a></li> 
       </ul>
     </div>
 </nav>
@@ -42,6 +45,9 @@
         <p>Get events list in UAthletics Department</p>
         <a href="events.php" class="red-btn">Get Events List</a>
       </li>
+<?php
+if($_SESSION['role']=='admin'){
+?>
       <li>
         <p>Add an employee to UAtheletics Department</p>
         <a href="add-employee.php" class="red-btn">Add Employee</a>
@@ -50,7 +56,14 @@
         <p>Get the list of employees in UAtheletics Department</p>
         <a href="employees.php" class="red-btn">Get Employee List</a>
       </li>
-      
+<?php
+}
+?> 
 </div>
 </body>
 </html>
+<?php
+}else{
+echo 'Un-Authorized';
+}
+?>
